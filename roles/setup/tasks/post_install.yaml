@@ -1,0 +1,32 @@
+- name: Setup containerd group and permissions
+  block:
+    - name: Create containerd group
+      ansible.builtin.group:
+        name: containerd
+        state: present
+        system: true
+
+    - name: Add ansible user to containerd group
+      ansible.builtin.user:
+        name: "{{ ansible_env.USER }}"
+        groups: containerd
+        append: true
+
+    - name: Set directory permissions for containerd
+      ansible.builtin.file:
+        path: "/var/run/containerd"
+        state: directory
+        mode: "0760"
+        owner: root
+        group: containerd
+        recurse: true
+
+    - name: Set containerd socket group ownership
+      ansible.builtin.file:
+        path: "/run/containerd/containerd.sock"
+        group: containerd
+        mode: "0660"
+      register: socket_ownership
+      until: socket_ownership is not failed
+      retries: 5
+      delay: 2

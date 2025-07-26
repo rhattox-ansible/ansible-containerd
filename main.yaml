@@ -5,5 +5,4 @@
   vars:
     ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
-    - pre-setup
-    # - setup
+    - setup
