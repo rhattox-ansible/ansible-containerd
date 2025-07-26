@@ -7,6 +7,21 @@
         remote_src: true
         mode: "0755"
 
+    - name: Create SystemD folder
+      ansible.builtin.file:
+        path: "{{ containerd_systemctl_folder }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ ansible_env.USER }}"
+        group: "{{ ansible_env.USER }}"
+
+    - name: Copy containerd systemd service file
+      ansible.builtin.copy:
+        src: "{{ temporary_folder }}/containerd.service"
+        dest: "{{ containerd_systemctl_folder }}/containerd.service"
+        remote_src: true
+        mode: "0644"
+
     - name: Copy runc binary
       ansible.builtin.copy:
         src: "{{ temporary_folder }}/runc"
@@ -14,19 +29,20 @@
         remote_src: true
         mode: "0755"
 
+    - name: Create CNI Folder
+      ansible.builtin.file:
+        path: "{{ cni_plugin_folder }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ ansible_env.USER }}"
+        group: "{{ ansible_env.USER }}"
+
     - name: Copy CNI plugin binaries
       ansible.builtin.copy:
         src: "{{ temporary_folder }}/cni/"
-        dest: "{{ install_path }}"
+        dest: "{{ cni_plugin_folder }}"
         remote_src: true
         mode: "0755"
-
-    - name: Copy containerd systemd service file
-      ansible.builtin.copy:
-        src: "{{ temporary_folder }}/containerd.service"
-        dest: "/etc/systemd/system/containerd.service"
-        remote_src: true
-        mode: "0644"
 
     - name: Reload systemd daemon
       ansible.builtin.systemd:
