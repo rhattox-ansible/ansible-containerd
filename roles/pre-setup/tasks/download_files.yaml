@@ -1,0 +1,37 @@
+- name: Download Files
+  block:
+    - name: Download containerD
+      ansible.builtin.get_url:
+        url: "{{ containerd_url }}"
+        dest: "{{ temporary_folder }}/containerd.tar.gz"
+        mode: "0644"
+        force: false
+        validate_certs: true
+        timeout: 60
+
+    - name: Download runC
+      ansible.builtin.get_url:
+        url: "{{ runc_url }}"
+        dest: "{{ temporary_folder }}/runc"
+        mode: "0644"
+        force: false
+        validate_certs: true
+        timeout: 60
+
+    - name: Download CNI
+      ansible.builtin.get_url:
+        url: "{{ cni_plugin_url }}"
+        dest: "{{ temporary_folder }}/cni.tgz"
+        mode: "0644"
+        force: false
+        validate_certs: true
+        timeout: 60
+
+    - name: Download containerd systemd service file
+      ansible.builtin.get_url:
+        url: "{{ containerd_systemctl_url }}"
+        dest: "{{ temporary_folder }}/containerd.service"
+        mode: "0644"
+        force: false
+        validate_certs: true
+        timeout: 60

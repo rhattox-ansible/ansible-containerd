@@ -1,0 +1,39 @@
+- name: Copy Files
+  block:
+    - name: Copy containerD binaries
+      ansible.builtin.copy:
+        src: "{{ temporary_folder }}/containerd/bin/"
+        dest: "{{ install_path }}"
+        remote_src: true
+        mode: "0755"
+
+    - name: Copy runc binary
+      ansible.builtin.copy:
+        src: "{{ temporary_folder }}/runc"
+        dest: "{{ runc_path }}"
+        remote_src: true
+        mode: "0755"
+
+    - name: Copy CNI plugin binaries
+      ansible.builtin.copy:
+        src: "{{ temporary_folder }}/cni/"
+        dest: "{{ install_path }}"
+        remote_src: true
+        mode: "0755"
+
+    - name: Copy containerd systemd service file
+      ansible.builtin.copy:
+        src: "{{ temporary_folder }}/containerd.service"
+        dest: "/etc/systemd/system/containerd.service"
+        remote_src: true
+        mode: "0644"
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: Enable and start containerd service
+      ansible.builtin.systemd:
+        name: containerd
+        state: started
+        enabled: true

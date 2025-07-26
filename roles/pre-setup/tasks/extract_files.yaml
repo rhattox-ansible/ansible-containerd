@@ -1,0 +1,32 @@
+- name: Extract Files
+  block:
+    - name: Create containerD directory
+      ansible.builtin.file:
+        path: "{{ temporary_folder }}/containerd"
+        state: directory
+        mode: "0755"
+
+    - name: Extract containerD archive
+      ansible.builtin.unarchive:
+        src: "{{ temporary_folder }}/containerd.tar.gz"
+        dest: "{{ temporary_folder }}/containerd"
+        remote_src: true
+        mode: "0755"
+
+    - name: Make runc executable
+      ansible.builtin.file:
+        path: "{{ temporary_folder }}/runc"
+        mode: "0755"
+
+    - name: Create CNI directory
+      ansible.builtin.file:
+        path: "{{ temporary_folder }}/cni"
+        state: directory
+        mode: "0755"
+
+    - name: Extract CNI plugins
+      ansible.builtin.unarchive:
+        src: "{{ temporary_folder }}/cni.tgz"
+        dest: "{{ temporary_folder }}/cni"
+        remote_src: true
+        mode: "0755"

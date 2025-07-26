@@ -1,0 +1,7 @@
+- name: Create directory if it doesn't exist
+  ansible.builtin.file:
+    path: "{{ temporary_folder }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"

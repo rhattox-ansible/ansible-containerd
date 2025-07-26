@@ -1,0 +1,11 @@
+- name: Download Files
+  block:
+    - name: Download containerD
+      get_url:
+        url: "{{ containerd_url }}"
+        dest: "{{ download_path }}"
+        mode: '0644'
+        force: no
+        validate_certs: yes
+        timeout: 60
+      register: download_result
