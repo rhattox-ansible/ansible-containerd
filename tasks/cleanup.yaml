@@ -1,0 +1,4 @@
+- name: Remove temporary folder
+  ansible.builtin.file:
+    path: "{{ temporary_folder }}"
+    state: absent
