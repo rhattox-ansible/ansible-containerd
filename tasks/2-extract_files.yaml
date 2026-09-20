@@ -1,18 +1,18 @@
-- name: Extract containerD archive
+- name: Extract the containerd archive into the temporary directory
   ansible.builtin.unarchive:
     src: "{{ temporary_folder }}/containerd.tar.gz"
     dest: "{{ temporary_folder }}/containerd"
     remote_src: true
     mode: "0755"
 
-- name: Extract CNI plugins
+- name: Extract the CNI plugin archive into the temporary directory
   ansible.builtin.unarchive:
     src: "{{ temporary_folder }}/cni.tgz"
     dest: "{{ temporary_folder }}/cni"
     remote_src: true
     mode: "0755"
 
-- name: Make runc executable
+- name: Set executable permissions on the runc binary
   ansible.builtin.file:
     path: "{{ temporary_folder }}/runc"
     mode: "0755"

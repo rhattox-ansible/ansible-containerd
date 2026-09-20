@@ -1,16 +1,16 @@
-- name: Create containerd group
+- name: Create the system containerd group
   ansible.builtin.group:
     name: containerd
     state: present
     system: true
 
-- name: Add ansible user to containerd group
+- name: Add the current user to the containerd group
   ansible.builtin.user:
     name: "{{ ansible_env.USER }}"
     groups: containerd
     append: true
 
-- name: Set directory permissions for containerd
+- name: Create and secure the containerd runtime directory
   ansible.builtin.file:
     path: "/var/run/containerd"
     state: directory
@@ -19,17 +19,17 @@
     group: containerd
     recurse: true
 
-- name: Reload systemd daemon
+- name: Reload the systemd daemon configuration
   ansible.builtin.systemd:
     daemon_reload: true
 
-- name: Enable and start containerd service
+- name: Enable and start the containerd service
   ansible.builtin.systemd:
     name: containerd
     state: started
     enabled: true
 
-- name: Set containerd socket group ownership
+- name: Ensure the containerd socket is owned by the containerd group
   ansible.builtin.file:
     path: "/run/containerd/containerd.sock"
     group: containerd

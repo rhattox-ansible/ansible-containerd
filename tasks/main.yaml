@@ -1,12 +1,12 @@
-- name: Create temporary folder
+- name: Create working directories for the containerd installation
   ansible.builtin.include_tasks: 0-setup-folders.yaml
-- name: Download files
+- name: Download required containerd installation artifacts
   ansible.builtin.include_tasks: 1-download_files.yaml
-- name: Extract files
+- name: Extract the downloaded containerd and CNI archives
   ansible.builtin.include_tasks: 2-extract_files.yaml
-- name: Copy files
+- name: Install containerd, runc, and CNI binaries to the target locations
   ansible.builtin.include_tasks: 3-copy_files.yaml
-- name: Confgure App
+- name: Configure the containerd service and runtime permissions
   ansible.builtin.include_tasks: 4-configure_app.yaml
-- name: Clean Up
+- name: Remove temporary installation files and folders
   ansible.builtin.include_tasks: 5-cleanup.yaml

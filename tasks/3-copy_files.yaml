@@ -1,25 +1,25 @@
-- name: Copy containerD binaries
+- name: Install the containerd binaries into the target path
   ansible.builtin.copy:
     src: "{{ temporary_folder }}/containerd/bin/"
     dest: "{{ install_path }}"
     remote_src: true
     mode: "0755"
 
-- name: Copy containerd systemd service file
+- name: Install the containerd systemd service unit
   ansible.builtin.copy:
     src: "{{ temporary_folder }}/containerd.service"
     dest: "{{ containerd_systemctl_folder }}/containerd.service"
     remote_src: true
     mode: "0644"
 
-- name: Copy runc binary
+- name: Install the runc binary to the system binary path
   ansible.builtin.copy:
     src: "{{ temporary_folder }}/runc"
     dest: "{{ runc_path }}"
     remote_src: true
     mode: "0755"
 
-- name: Copy CNI plugin binaries
+- name: Install the CNI plugin binaries to the CNI directory
   ansible.builtin.copy:
     src: "{{ temporary_folder }}/cni/"
     dest: "{{ cni_plugin_folder }}"

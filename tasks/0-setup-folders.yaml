@@ -1,22 +1,22 @@
-- name: "Create temporary folder"
+- name: Create the working directory for temporary installation artifacts
   ansible.builtin.file:
     path: "{{ temporary_folder }}"
     state: directory
     mode: "0750"
 
-- name: Create temporary containerD directory
+- name: Create the temporary containerd extraction directory
   ansible.builtin.file:
     path: "{{ temporary_folder }}/containerd"
     state: directory
     mode: "0750"
 
-- name: Create temporary CNI directory
+- name: Create the temporary CNI plugin extraction directory
   ansible.builtin.file:
     path: "{{ temporary_folder }}/cni"
     state: directory
     mode: "0750"
 
-- name: Create SystemD folder
+- name: Create the systemd unit directory for containerd
   ansible.builtin.file:
     path: "{{ containerd_systemctl_folder }}"
     state: directory
@@ -24,7 +24,7 @@
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
 
-- name: Create CNI Folder
+- name: Create the final CNI plugin installation directory
   ansible.builtin.file:
     path: "{{ cni_plugin_folder }}"
     state: directory

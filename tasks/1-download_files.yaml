@@ -1,4 +1,4 @@
-- name: Download containerD
+- name: Download the containerd archive
   ansible.builtin.get_url:
     url: "{{ containerd_url }}"
     dest: "{{ temporary_folder }}/containerd.tar.gz"
@@ -7,7 +7,7 @@
     validate_certs: true
     timeout: 60
 
-- name: Download runC
+- name: Download the runc binary
   ansible.builtin.get_url:
     url: "{{ runc_url }}"
     dest: "{{ temporary_folder }}/runc"
@@ -16,7 +16,7 @@
     validate_certs: true
     timeout: 60
 
-- name: Download CNI
+- name: Download the CNI plugin archive
   ansible.builtin.get_url:
     url: "{{ cni_plugin_url }}"
     dest: "{{ temporary_folder }}/cni.tgz"
@@ -25,7 +25,7 @@
     validate_certs: true
     timeout: 60
 
-- name: Download containerd systemd service file
+- name: Download the containerd systemd service unit
   ansible.builtin.get_url:
     url: "{{ containerd_systemctl_url }}"
     dest: "{{ temporary_folder }}/containerd.service"
