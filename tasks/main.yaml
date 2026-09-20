@@ -1,5 +1,12 @@
 - name: Create temporary folder
-  ansible.builtin.include_tasks: 0-setup_temporary_folder.yaml
-
+  ansible.builtin.include_tasks: 0-setup-folders.yaml
 - name: Download files
   ansible.builtin.include_tasks: 1-download_files.yaml
+- name: Extract files
+  ansible.builtin.include_tasks: 2-extract_files.yaml
+- name: Copy files
+  ansible.builtin.include_tasks: 3-copy_files.yaml
+- name: Confgure App
+  ansible.builtin.include_tasks: 4-configure_app.yaml
+- name: Clean Up
+  ansible.builtin.include_tasks: 5-cleanup.yaml

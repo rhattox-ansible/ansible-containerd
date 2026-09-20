@@ -28,3 +28,14 @@
   until: socket_ownership is not failed
   retries: 5
   delay: 2
+
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start containerd service
+  ansible.builtin.systemd:
+    name: containerd
+    state: started
+    enabled: true

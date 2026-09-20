@@ -1,0 +1,33 @@
+- name: "Create temporary folder"
+  ansible.builtin.file:
+    path: "{{ temporary_folder }}"
+    state: directory
+    mode: "0750"
+
+- name: Create temporary containerD directory
+  ansible.builtin.file:
+    path: "{{ temporary_folder }}/containerd"
+    state: directory
+    mode: "0750"
+
+- name: Create temporary CNI directory
+  ansible.builtin.file:
+    path: "{{ temporary_folder }}/cni"
+    state: directory
+    mode: "0750"
+
+- name: Create SystemD folder
+  ansible.builtin.file:
+    path: "{{ containerd_systemctl_folder }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+
+- name: Create CNI Folder
+  ansible.builtin.file:
+    path: "{{ cni_plugin_folder }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
