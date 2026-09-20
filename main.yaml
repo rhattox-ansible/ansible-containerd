@@ -6,9 +6,6 @@
   vars_files:
     - defaults/main.yaml
 
-  pre_tasks:
-    - name: Create temporary folder
-      ansible.builtin.include_tasks: "tasks/0-setup_temporary_folder.yaml"
-
-    - name: Download file from the internet
-      ansible.builtin.include_tasks: "tasks/1-download_files.yaml"
+  tasks:
+    - name: All
+      ansible.builtin.include_tasks: "tasks/main.yaml"
