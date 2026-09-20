@@ -1,14 +1,29 @@
 ---
 galaxy_info:
   author: rhattox
-  description: Container D instalation
+  description: Installs and configures containerd, runc, and CNI plugins on Linux hosts with systemd support.
+  company: rhattox-ansible
   license: MIT
-  min_ansible_version: "2.19"
+  min_ansible_version: "2.14"
   platforms:
     - name: Debian
       versions:
-        - all
+        - bookworm
+        - bullseye
     - name: Ubuntu
       versions:
-        - all
+        - jammy
+        - noble
+    - name: EL
+      versions:
+        - "8"
+        - "9"
+  galaxy_tags:
+    - containerd
+    - containers
+    - docker
+    - runtime
+    - cni
+    - systemd
+    - linux
 dependencies: []
