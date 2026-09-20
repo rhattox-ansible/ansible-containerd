@@ -19,17 +19,6 @@
     group: containerd
     recurse: true
 
-- name: Set containerd socket group ownership
-  ansible.builtin.file:
-    path: "/run/containerd/containerd.sock"
-    group: containerd
-    mode: "0660"
-  register: socket_ownership
-  until: socket_ownership is not failed
-  retries: 5
-  delay: 2
-
-
 - name: Reload systemd daemon
   ansible.builtin.systemd:
     daemon_reload: true
@@ -39,3 +28,13 @@
     name: containerd
     state: started
     enabled: true
+
+- name: Set containerd socket group ownership
+  ansible.builtin.file:
+    path: "/run/containerd/containerd.sock"
+    group: containerd
+    mode: "0660"
+  register: socket_ownership
+  until: socket_ownership is not failed
+  retries: 5
+  delay: 2
