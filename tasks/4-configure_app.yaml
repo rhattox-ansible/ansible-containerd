@@ -38,3 +38,35 @@
   until: socket_ownership is not failed
   retries: 5
   delay: 2
+
+- name: Create the containerd configuration directory
+  ansible.builtin.file:
+    path: /etc/containerd
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Generate the default containerd configuration
+  ansible.builtin.command: containerd config default
+  register: containerd_default_config
+  changed_when: false
+
+- name: Write the default containerd configuration
+  ansible.builtin.copy:
+    dest: /etc/containerd/config.toml
+    content: "{{ containerd_default_config.stdout }}\n"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable the systemd cgroup driver in containerd
+  ansible.builtin.replace:
+    path: /etc/containerd/config.toml
+    regexp: 'SystemdCgroup = false'
+    replace: 'SystemdCgroup = true'
+
+- name: Restart containerd to apply its configuration
+  ansible.builtin.systemd_service:
+    name: containerd
+    state: restarted
